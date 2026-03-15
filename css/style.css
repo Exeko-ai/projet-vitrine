@@ -1,0 +1,1045 @@
+/*
+  ============================================================
+  FICHIER CSS PRINCIPAL — style.css
+  ============================================================
+
+  Le CSS (Cascading Style Sheets) sert à STYLISER le HTML.
+  HTML = la structure, CSS = l'apparence.
+
+  COMMENT FONCTIONNE LE CSS ?
+  On écrit des "règles" qui suivent ce schéma :
+
+    selecteur {
+      propriété: valeur;
+      propriété: valeur;
+    }
+
+  TYPES DE SÉLECTEURS :
+  ┌─────────────────────────────────────────────────────────┐
+  │  p          → tous les <p>                              │
+  │  .ma-classe → tous les éléments avec class="ma-classe"  │
+  │  #mon-id    → l'élément unique avec id="mon-id"         │
+  │  nav a      → les <a> DANS un <nav>                     │
+  │  a:hover    → les <a> quand la souris est dessus        │
+  └─────────────────────────────────────────────────────────┘
+
+  ORDRE DE PRIORITÉ (Cascading = "en cascade") :
+  1. Styles en ligne : <p style="color: red">    (priorité max)
+  2. #id                                          (priorité haute)
+  3. .classe                                      (priorité moyenne)
+  4. balise                                       (priorité basse)
+
+  CONVENTION DE NOMMAGE BEM (Block__Element--Modifier) :
+  On utilise BEM pour garder le CSS organisé et lisible.
+  Ex : .carte-projet__titre--important
+       ↑ bloc      ↑ élément  ↑ modificateur
+  ============================================================
+*/
+
+
+/* ============================================================
+   1. VARIABLES CSS (CUSTOM PROPERTIES)
+   ============================================================
+   Les variables CSS permettent de définir des valeurs
+   réutilisables dans tout le fichier.
+   Syntaxe : --nom-variable: valeur;
+   Utilisation : color: var(--nom-variable);
+
+   On les déclare dans :root (le sélecteur de plus haut niveau).
+   [MODIFIE ICI] → Change les couleurs pour personnaliser ton site !
+*/
+:root {
+  /* ---- Palette de couleurs ---- */
+  --couleur-primaire: #6c63ff;        /* Violet — couleur principale */
+  --couleur-primaire-fonce: #5a52d5;  /* Violet foncé — pour hover */
+  --couleur-secondaire: #ff6584;      /* Rose — couleur d'accent chaud */
+  --couleur-accent: #43b89c;          /* Vert — couleur d'accent froid */
+  --couleur-succes: #28a745;          /* Vert — messages de succès */
+  --couleur-danger: #dc3545;          /* Rouge — erreurs, suppressions */
+  --couleur-avertissement: #ffc107;   /* Jaune — avertissements */
+
+  /* ---- Couleurs de texte et de fond ---- */
+  --couleur-fond: #f8f9fa;            /* Fond général (presque blanc) */
+  --couleur-fond-sombre: #1a1a2e;     /* Fond sombre (sections alternées) */
+  --couleur-texte: #2d3436;           /* Texte principal (gris très foncé) */
+  --couleur-texte-clair: #636e72;     /* Texte secondaire (gris moyen) */
+  --couleur-blanc: #ffffff;
+  --couleur-bordure: #dee2e6;         /* Couleur des bordures */
+
+  /* ---- Typographie ---- */
+  /*
+    font-family: liste de polices par ordre de préférence.
+    Si la première n'est pas disponible, le navigateur essaie la suivante.
+    'system-ui' = la police par défaut du système de l'utilisateur.
+  */
+  --police-titre: 'Georgia', 'Times New Roman', serif;
+  --police-corps: 'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  --taille-texte-base: 16px;  /* 1rem = 16px */
+  --taille-h1: 3rem;          /* 3 × 16px = 48px */
+  --taille-h2: 2rem;          /* 32px */
+  --taille-h3: 1.5rem;        /* 24px */
+
+  /* ---- Espacement ---- */
+  /*
+    rem = unité relative à la taille de la police de <html>.
+    Avantage : si l'utilisateur change la taille de police dans
+    son navigateur, tout s'adapte proportionnellement.
+    px = pixels, taille fixe.
+  */
+  --espacement-xs: 0.5rem;   /* 8px  */
+  --espacement-sm: 1rem;     /* 16px */
+  --espacement-md: 2rem;     /* 32px */
+  --espacement-lg: 4rem;     /* 64px */
+  --espacement-xl: 6rem;     /* 96px */
+
+  /* ---- Arrondis ---- */
+  --arrondi-sm: 4px;
+  --arrondi-md: 8px;
+  --arrondi-lg: 16px;
+  --arrondi-rond: 50%;       /* Cercle parfait */
+  --arrondi-pilule: 999px;   /* Capsule / pill */
+
+  /* ---- Ombres ---- */
+  --ombre-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --ombre-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --ombre-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+  /* ---- Transitions ---- */
+  --transition-rapide: 0.15s ease;
+  --transition-normale: 0.3s ease;
+
+  /* ---- Largeur maximale du contenu ---- */
+  --largeur-max: 1100px;
+
+  /* ---- Hauteur de la navbar ---- */
+  --hauteur-navbar: 70px;
+}
+
+
+/* ============================================================
+   2. RESET ET BASE
+   ============================================================
+   Les navigateurs ont des styles par défaut différents.
+   Le "reset" harmonise tout pour qu'on parte d'une base propre.
+*/
+
+/*
+  * = sélecteur universel, cible TOUS les éléments.
+  box-sizing: border-box; → la largeur et hauteur incluent
+  le padding et la bordure (comportement bien plus logique).
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+  Styles de base sur <html> et <body>.
+  scroll-behavior: smooth → les liens ancres (#section) défilent
+  en douceur au lieu de sauter brusquement.
+*/
+html {
+  font-size: var(--taille-texte-base);
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--police-corps);
+  color: var(--couleur-texte);
+  background-color: var(--couleur-fond);
+  line-height: 1.6;  /* Interlignage : 1.6 × la taille de police */
+  overflow-x: hidden; /* Cache le défilement horizontal (évite les bugs) */
+}
+
+/* Images : ne jamais dépasser leur conteneur */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; /* Évite l'espace sous les images (comportement inline) */
+}
+
+/* Supprime la décoration des listes dans nav et footer */
+nav ul,
+footer ul {
+  list-style: none;
+}
+
+/* Liens : couleur cohérente avec la charte */
+a {
+  color: var(--couleur-primaire);
+  text-decoration: none;
+  transition: color var(--transition-rapide);
+}
+a:hover {
+  color: var(--couleur-primaire-fonce);
+  text-decoration: underline;
+}
+
+/* Hiérarchie des titres */
+h1, h2, h3, h4 {
+  font-family: var(--police-titre);
+  line-height: 1.2;
+  color: var(--couleur-texte);
+}
+h1 { font-size: var(--taille-h1); }
+h2 { font-size: var(--taille-h2); }
+h3 { font-size: var(--taille-h3); }
+
+
+/* ============================================================
+   3. COMPOSANTS RÉUTILISABLES (BOUTONS, TITRES DE SECTION)
+   ============================================================
+   Ces styles s'appliquent à plusieurs endroits du site.
+*/
+
+/* --- Boutons --- */
+/*
+  On définit un style de BASE commun à tous les boutons,
+  puis des MODIFICATEURS pour les variantes (--primaire, --secondaire...).
+  C'est la philosophie BEM.
+*/
+.bouton {
+  display: inline-block;     /* Permet de définir padding sans casser la ligne */
+  padding: 0.75rem 1.5rem;
+  border: 2px solid transparent;
+  border-radius: var(--arrondi-pilule);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;           /* La souris devient une main au survol */
+  transition: all var(--transition-normale);
+  text-align: center;
+  text-decoration: none;     /* Enlève le soulignement des liens-boutons */
+  white-space: nowrap;       /* Empêche le texte de se couper en 2 lignes */
+}
+.bouton:hover {
+  transform: translateY(-2px);   /* Monte légèrement au survol */
+  box-shadow: var(--ombre-md);
+  text-decoration: none;
+}
+.bouton:active {
+  transform: translateY(0);      /* Revient à la position normale au clic */
+}
+
+/* Bouton principal : fond coloré */
+.bouton--primaire {
+  background-color: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+  border-color: var(--couleur-primaire);
+}
+.bouton--primaire:hover {
+  background-color: var(--couleur-primaire-fonce);
+  border-color: var(--couleur-primaire-fonce);
+  color: var(--couleur-blanc);
+}
+
+/* Bouton secondaire : contour sans fond */
+.bouton--secondaire {
+  background-color: transparent;
+  color: var(--couleur-primaire);
+  border-color: var(--couleur-primaire);
+}
+.bouton--secondaire:hover {
+  background-color: var(--couleur-primaire);
+  color: var(--couleur-blanc);
+}
+
+/* Bouton danger : rouge */
+.bouton--danger {
+  background-color: transparent;
+  color: var(--couleur-danger);
+  border-color: var(--couleur-danger);
+}
+.bouton--danger:hover {
+  background-color: var(--couleur-danger);
+  color: var(--couleur-blanc);
+}
+
+/* Bouton petit : moins de padding */
+.bouton--petit {
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+/* --- Titres de section --- */
+.section__titre {
+  text-align: center;
+  margin-bottom: var(--espacement-sm);
+  position: relative;
+  padding-bottom: var(--espacement-sm);
+}
+
+/*
+  ::after = pseudo-élément : crée un élément virtuel APRÈS le contenu.
+  Ici on crée une ligne décorative sous le titre.
+  On utilise aussi ::before pour créer des éléments avant le contenu.
+*/
+.section__titre::after {
+  content: '';              /* Obligatoire pour les pseudo-éléments */
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%); /* Centre horizontalement */
+  width: 60px;
+  height: 4px;
+  background: var(--couleur-primaire);
+  border-radius: var(--arrondi-pilule);
+}
+
+/* Texte d'introduction de section */
+.section__intro {
+  text-align: center;
+  color: var(--couleur-texte-clair);
+  max-width: 600px;
+  margin: 0 auto var(--espacement-md);
+  font-size: 1.1rem;
+}
+
+
+/* ============================================================
+   4. NAVBAR (BARRE DE NAVIGATION)
+   ============================================================
+*/
+.navbar {
+  position: fixed;      /* Reste collée en haut lors du défilement */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hauteur-navbar);
+  background-color: rgba(255, 255, 255, 0.95);
+  /*
+    backdrop-filter: blur → effet "verre dépoli" moderne.
+    Le fond derrière la navbar est floutée.
+  */
+  backdrop-filter: blur(10px);
+  box-shadow: var(--ombre-sm);
+  z-index: 1000;        /* z-index : couche d'empilement, 1000 = au-dessus de tout */
+
+  /*
+    display: flex → active Flexbox.
+    Flexbox permet d'aligner et distribuer les éléments facilement.
+    C'est l'une des deux grandes techniques de mise en page (avec Grid).
+  */
+  display: flex;
+  align-items: center;        /* Centre verticalement */
+  justify-content: space-between; /* Espace entre logo et liens */
+  padding: 0 var(--espacement-md);
+}
+
+.navbar__logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--couleur-primaire);
+  text-decoration: none;
+}
+.navbar__logo:hover {
+  color: var(--couleur-primaire-fonce);
+  text-decoration: none;
+}
+
+/* Les liens de navigation */
+.navbar__liens {
+  display: flex;
+  gap: var(--espacement-sm); /* gap = espace entre les éléments flex */
+  list-style: none;
+}
+
+.navbar__liens a {
+  color: var(--couleur-texte);
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--arrondi-sm);
+  transition: all var(--transition-rapide);
+  text-decoration: none;
+}
+.navbar__liens a:hover {
+  color: var(--couleur-primaire);
+  background-color: rgba(108, 99, 255, 0.1);
+  text-decoration: none;
+}
+
+/* Classe ajoutée par JS quand on scroll : lien actif */
+.navbar__liens a.actif {
+  color: var(--couleur-primaire);
+  font-weight: 600;
+}
+
+/* Bouton burger (visible seulement sur mobile — géré dans responsive.css) */
+.navbar__burger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--couleur-texte);
+}
+
+
+/* ============================================================
+   5. SECTION HERO
+   ============================================================
+*/
+.hero {
+  min-height: 100vh;    /* 100vh = 100% de la hauteur de la fenêtre */
+  padding-top: var(--hauteur-navbar); /* Compense la navbar fixe */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacement-lg);
+  padding-left: var(--espacement-md);
+  padding-right: var(--espacement-md);
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+}
+
+.hero__contenu {
+  flex: 1;            /* flex: 1 → prend tout l'espace disponible */
+  max-width: 600px;
+}
+
+.hero__titre {
+  font-size: clamp(2rem, 5vw, var(--taille-h1));
+  /*
+    clamp(min, préféré, max) → taille fluide qui s'adapte à la fenêtre.
+    min: 2rem, idéal: 5% de la largeur fenêtre, max: var(--taille-h1)
+  */
+  margin-bottom: var(--espacement-sm);
+}
+
+.hero__nom {
+  color: var(--couleur-primaire);
+  /* Dégradé sur le texte */
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-secondaire));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero__soustitre {
+  font-size: 1.2rem;
+  color: var(--couleur-texte-clair);
+  margin-bottom: var(--espacement-md);
+}
+
+.hero__contenu .bouton {
+  margin-right: var(--espacement-xs);
+  margin-bottom: var(--espacement-xs);
+}
+
+/* Photo de profil */
+.hero__photo-wrapper {
+  position: relative;
+  flex-shrink: 0;    /* Ne se rétrécit pas quand l'espace manque */
+}
+
+.hero__photo {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;      /* Recadre l'image pour remplir le conteneur */
+  border-radius: var(--arrondi-rond);
+  border: 4px solid var(--couleur-primaire);
+  box-shadow: var(--ombre-lg);
+}
+
+/* Initiales affichées si pas de photo */
+.hero__initiales {
+  width: 280px;
+  height: 280px;
+  border-radius: var(--arrondi-rond);
+  background: linear-gradient(135deg, var(--couleur-primaire), var(--couleur-secondaire));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  font-weight: 700;
+  color: white;
+  box-shadow: var(--ombre-lg);
+}
+
+/*
+  Quand la photo charge, on cache les initiales.
+  Le JS gère ça aussi, mais on peut le faire en CSS pur
+  avec le sélecteur + (frère adjacent).
+*/
+.hero__photo:not([style*="display:none"]) + .hero__initiales,
+.hero__photo:not([style*="display: none"]) + .hero__initiales {
+  display: none;
+}
+
+
+/* ============================================================
+   6. SECTION À PROPOS
+   ============================================================
+*/
+.apropos {
+  background-color: var(--couleur-fond-sombre);
+  color: var(--couleur-blanc);
+  padding: var(--espacement-xl) var(--espacement-md);
+}
+
+/* Quand la section a un fond sombre, on adapte les titres */
+.apropos .section__titre {
+  color: var(--couleur-blanc);
+}
+
+.apropos__contenu {
+  max-width: var(--largeur-max);
+  margin: var(--espacement-md) auto 0;
+  display: grid;
+  /*
+    CSS Grid = l'autre grande technique de mise en page.
+    grid-template-columns → nombre et taille des colonnes.
+    1fr = 1 fraction de l'espace disponible.
+    2fr 1fr → 2 colonnes : la 1ère fait 2/3, la 2ème 1/3.
+  */
+  grid-template-columns: 2fr 1fr;
+  gap: var(--espacement-lg);
+  align-items: start;
+}
+
+.apropos__texte p {
+  margin-bottom: var(--espacement-sm);
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.apropos__infos {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: var(--arrondi-lg);
+  padding: var(--espacement-md);
+}
+
+.apropos__infos h3 {
+  color: var(--couleur-blanc);
+  margin-bottom: var(--espacement-sm);
+}
+
+.infos__liste {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacement-xs);
+}
+
+.infos__liste li {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.infos__liste a {
+  color: var(--couleur-primaire);
+}
+.infos__liste a:hover {
+  color: var(--couleur-secondaire);
+}
+
+
+/* ============================================================
+   7. SECTION PROJETS
+   ============================================================
+*/
+.projets {
+  padding: var(--espacement-xl) var(--espacement-md);
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+}
+
+.projets__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /*
+    repeat(auto-fill, minmax(300px, 1fr)) :
+    - auto-fill : crée autant de colonnes que possible
+    - minmax(300px, 1fr) : chaque colonne fait min 300px, max 1fr
+    → Responsive automatiquement sans media queries !
+  */
+  gap: var(--espacement-md);
+  margin-top: var(--espacement-md);
+}
+
+/* Carte de projet */
+.carte-projet {
+  background: var(--couleur-blanc);
+  border-radius: var(--arrondi-lg);
+  box-shadow: var(--ombre-sm);
+  overflow: hidden;  /* Cache ce qui dépasse les bords arrondis */
+  transition: transform var(--transition-normale), box-shadow var(--transition-normale);
+  display: flex;
+  flex-direction: column;   /* Les enfants s'empilent verticalement */
+}
+
+.carte-projet:hover {
+  transform: translateY(-6px);  /* Lévitation au survol */
+  box-shadow: var(--ombre-lg);
+}
+
+.carte-projet__image {
+  height: 180px;
+  background: var(--couleur-primaire);
+  position: relative;
+  overflow: hidden;
+}
+
+.carte-projet__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normale);
+}
+.carte-projet:hover .carte-projet__image img {
+  transform: scale(1.05); /* Zoom léger de l'image au survol */
+}
+
+/* Badge de technologie (tag) sur la carte */
+.carte-projet__tag {
+  position: absolute;
+  top: var(--espacement-xs);
+  right: var(--espacement-xs);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--arrondi-pilule);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.carte-projet__corps {
+  padding: var(--espacement-sm);
+  flex: 1;  /* Prend tout l'espace restant → les cartes font la même hauteur */
+  display: flex;
+  flex-direction: column;
+}
+
+.carte-projet__titre {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.carte-projet__description {
+  color: var(--couleur-texte-clair);
+  font-size: 0.9rem;
+  flex: 1; /* Pousse les boutons vers le bas */
+  margin-bottom: var(--espacement-sm);
+}
+
+.carte-projet__liens {
+  display: flex;
+  gap: var(--espacement-xs);
+  flex-wrap: wrap;
+}
+
+
+/* ============================================================
+   8. SECTION COMPÉTENCES
+   ============================================================
+*/
+.competences {
+  background-color: var(--couleur-fond-sombre);
+  color: var(--couleur-blanc);
+  padding: var(--espacement-xl) var(--espacement-md);
+}
+
+.competences .section__titre {
+  color: var(--couleur-blanc);
+}
+
+.competences__grille {
+  max-width: var(--largeur-max);
+  margin: var(--espacement-md) auto 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espacement-lg);
+}
+
+.competences__groupe h3 {
+  color: var(--couleur-blanc);
+  margin-bottom: var(--espacement-sm);
+  border-bottom: 2px solid var(--couleur-primaire);
+  padding-bottom: 0.5rem;
+}
+
+/* Barre de compétence */
+.competence {
+  display: grid;
+  grid-template-columns: 130px 1fr 45px;
+  align-items: center;
+  gap: var(--espacement-xs);
+  margin-bottom: var(--espacement-sm);
+}
+
+.competence__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* Conteneur de la barre */
+.competence__barre {
+  height: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--arrondi-pilule);
+  overflow: hidden;
+}
+
+/* La barre de remplissage — utilise la variable CSS --niveau */
+.competence__progression {
+  height: 100%;
+  width: var(--niveau);   /* ← LIT la variable définie dans le HTML */
+  background: linear-gradient(90deg, var(--couleur-primaire), var(--couleur-secondaire));
+  border-radius: var(--arrondi-pilule);
+  /*
+    Animation CSS :
+    animation: nom durée timing-function délai;
+    "remplir" est définie dans @keyframes plus bas.
+  */
+  animation: remplir 1.5s ease-out forwards;
+  transform-origin: left;
+}
+
+/* Animation d'apparition des barres */
+@keyframes remplir {
+  from { width: 0; }
+  to   { width: var(--niveau); }
+}
+
+.competence__pourcentage {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--couleur-primaire);
+  text-align: right;
+}
+
+/* Badges */
+.badges {
+  display: flex;
+  flex-wrap: wrap;  /* Les badges passent à la ligne si besoin */
+  gap: var(--espacement-xs);
+  margin-bottom: var(--espacement-sm);
+}
+
+.badge {
+  background: rgba(108, 99, 255, 0.3);
+  color: var(--couleur-blanc);
+  border: 1px solid rgba(108, 99, 255, 0.5);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--arrondi-pilule);
+  font-size: 0.85rem;
+  transition: all var(--transition-rapide);
+}
+.badge:hover {
+  background: var(--couleur-primaire);
+  border-color: var(--couleur-primaire);
+}
+
+.badge--langue {
+  background: rgba(67, 184, 156, 0.3);
+  border-color: rgba(67, 184, 156, 0.5);
+}
+.badge--langue:hover {
+  background: var(--couleur-accent);
+  border-color: var(--couleur-accent);
+}
+
+
+/* ============================================================
+   9. SECTION COMMENTAIRES ET FORMULAIRE
+   ============================================================
+*/
+.commentaires {
+  padding: var(--espacement-xl) var(--espacement-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Le formulaire */
+.formulaire {
+  background: var(--couleur-blanc);
+  border-radius: var(--arrondi-lg);
+  padding: var(--espacement-md);
+  box-shadow: var(--ombre-md);
+  margin-bottom: var(--espacement-lg);
+}
+
+/* Groupes de champs */
+fieldset {
+  border: none;
+  margin-bottom: var(--espacement-md);
+}
+
+legend {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--couleur-primaire);
+  margin-bottom: var(--espacement-sm);
+  padding: 0 0.3rem;
+}
+
+.formulaire__groupe {
+  margin-bottom: var(--espacement-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* Labels */
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--couleur-texte);
+}
+
+.obligatoire {
+  color: var(--couleur-danger);
+}
+
+.optionnel {
+  font-weight: normal;
+  color: var(--couleur-texte-clair);
+  font-size: 0.8rem;
+}
+
+/* Inputs et textarea */
+input[type="text"],
+input[type="email"],
+input[type="range"],
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--couleur-bordure);
+  border-radius: var(--arrondi-md);
+  font-size: 1rem;
+  font-family: var(--police-corps);
+  color: var(--couleur-texte);
+  background: var(--couleur-fond);
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+/*
+  :focus = pseudo-classe : l'élément est sélectionné (tabulation ou clic).
+  outline: none → supprime le contour par défaut du navigateur.
+  IMPORTANT : ne jamais supprimer outline sans le remplacer !
+  L'outline est crucial pour l'accessibilité clavier.
+  On le remplace par notre propre style.
+*/
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--couleur-primaire);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+}
+
+/* Input invalide (géré par JS aussi avec class="invalide") */
+input.invalide,
+textarea.invalide {
+  border-color: var(--couleur-danger);
+}
+input.invalide:focus,
+textarea.invalide:focus {
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+}
+
+/* Input valide */
+input.valide,
+textarea.valide {
+  border-color: var(--couleur-succes);
+}
+
+textarea {
+  resize: vertical;  /* L'utilisateur peut redimensionner verticalement */
+  min-height: 120px;
+}
+
+/* Range (curseur de note) */
+input[type="range"] {
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  accent-color: var(--couleur-primaire); /* Couleur du curseur */
+}
+
+.note__wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--espacement-sm);
+}
+
+output {
+  font-size: 1.2rem;
+  min-width: 80px;
+}
+
+/* Compteur de caractères */
+.compteur-chars {
+  color: var(--couleur-texte-clair);
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+/* Messages d'erreur sous les champs */
+.formulaire__erreur {
+  color: var(--couleur-danger);
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-height: 1.2em; /* Réserve l'espace pour éviter les sauts de layout */
+}
+
+/* Boutons du formulaire */
+.formulaire__actions {
+  display: flex;
+  gap: var(--espacement-xs);
+  flex-wrap: wrap;
+  margin-top: var(--espacement-sm);
+}
+
+/* Message de confirmation (caché par défaut) */
+.formulaire__confirmation {
+  display: none;   /* Caché → JS lui retire ce style */
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid var(--couleur-succes);
+  color: var(--couleur-succes);
+  padding: var(--espacement-sm);
+  border-radius: var(--arrondi-md);
+  margin-top: var(--espacement-sm);
+  font-weight: 600;
+}
+
+/* Classe ajoutée par JS pour afficher la confirmation */
+.formulaire__confirmation.visible {
+  display: block;
+  animation: apparaitre 0.3s ease;
+}
+
+@keyframes apparaitre {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Liste des commentaires */
+.commentaires__liste {
+  margin-top: var(--espacement-lg);
+}
+
+.commentaires__liste h3 {
+  margin-bottom: var(--espacement-sm);
+  color: var(--couleur-texte);
+}
+
+.commentaires__vide {
+  color: var(--couleur-texte-clair);
+  font-style: italic;
+  text-align: center;
+  padding: var(--espacement-md);
+}
+
+/* Carte de commentaire individuel */
+.carte-commentaire {
+  background: var(--couleur-blanc);
+  border-radius: var(--arrondi-md);
+  padding: var(--espacement-sm);
+  margin-bottom: var(--espacement-sm);
+  box-shadow: var(--ombre-sm);
+  border-left: 4px solid var(--couleur-primaire);
+  animation: apparaitre 0.4s ease;
+}
+
+.carte-commentaire__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.carte-commentaire__auteur {
+  font-weight: 700;
+  color: var(--couleur-primaire);
+}
+
+.carte-commentaire__meta {
+  display: flex;
+  gap: var(--espacement-xs);
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+}
+
+.carte-commentaire__note {
+  font-size: 0.9rem;
+}
+
+.carte-commentaire__texte {
+  color: var(--couleur-texte);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+
+/* ============================================================
+   10. FOOTER
+   ============================================================
+*/
+.footer {
+  background: var(--couleur-fond-sombre);
+  color: rgba(255, 255, 255, 0.8);
+  padding: var(--espacement-lg) var(--espacement-md) var(--espacement-md);
+  text-align: center;
+}
+
+.footer__contenu {
+  max-width: var(--largeur-max);
+  margin: 0 auto var(--espacement-md);
+  display: flex;
+  justify-content: center;
+  gap: var(--espacement-xl);
+  flex-wrap: wrap;
+}
+
+.footer__social h4,
+.footer__nav h4 {
+  color: var(--couleur-blanc);
+  margin-bottom: var(--espacement-xs);
+}
+
+.footer__social ul,
+.footer__nav ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.footer__social a,
+.footer__nav a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+.footer__social a:hover,
+.footer__nav a:hover {
+  color: var(--couleur-primaire);
+  text-decoration: none;
+}
+
+.footer__copyright {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  margin-top: var(--espacement-sm);
+}
+
+.footer__retour-haut {
+  display: inline-block;
+  margin-top: var(--espacement-sm);
+  padding: 0.5rem 1rem;
+  background: rgba(108, 99, 255, 0.3);
+  color: var(--couleur-blanc);
+  border-radius: var(--arrondi-pilule);
+  font-size: 0.85rem;
+  transition: background var(--transition-rapide);
+}
+.footer__retour-haut:hover {
+  background: var(--couleur-primaire);
+  text-decoration: none;
+  color: var(--couleur-blanc);
+}

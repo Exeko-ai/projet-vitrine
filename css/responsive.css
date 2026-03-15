@@ -1,0 +1,297 @@
+/*
+  ============================================================
+  FICHIER CSS RESPONSIVE — responsive.css
+  ============================================================
+
+  Le "Responsive Design" = faire en sorte que le site s'affiche
+  correctement sur TOUS les écrans : mobile, tablette, PC.
+
+  COMMENT ÇA MARCHE ?
+  On utilise les "Media Queries" (@media).
+  Elles permettent d'appliquer des styles SEULEMENT si une
+  condition est vraie (ex: si l'écran est petit).
+
+  SYNTAXE :
+    @media (max-width: 768px) {
+      /* ces styles s'appliquent si l'écran ≤ 768px */
+    }
+
+  STRATÉGIE "MOBILE FIRST" vs "DESKTOP FIRST" :
+  ┌──────────────────────────────────────────────────────┐
+  │ Mobile First (recommandé) :                          │
+  │ On écrit les styles de base pour mobile,             │
+  │ et on utilise min-width pour les grands écrans.      │
+  │                                                      │
+  │ Desktop First (ce qu'on fait ici) :                  │
+  │ On écrit les styles pour grand écran (dans style.css)│
+  │ et on utilise max-width pour adapter les petits.     │
+  └──────────────────────────────────────────────────────┘
+
+  NOS BREAKPOINTS (points de rupture) :
+  • < 480px  → Très petits mobiles
+  • < 768px  → Mobiles (portrait)
+  • < 1024px → Tablettes et petits laptops
+  ============================================================
+*/
+
+
+/* ============================================================
+   TABLETTES ET PETITS LAPTOPS (< 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+
+  /* La section À propos : on passe à 1 seule colonne */
+  .apropos__contenu {
+    grid-template-columns: 1fr;
+  }
+
+  /* Les compétences : 1 colonne */
+  .competences__grille {
+    grid-template-columns: 1fr;
+  }
+
+  /* La grille de projets : max 2 colonnes */
+  .projets__grille {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+
+  /* La section hero : colonne unique, centré */
+  .hero {
+    flex-direction: column-reverse;
+    /*
+      column-reverse : les éléments s'empilent du bas vers le haut.
+      On veut la photo EN HAUT sur mobile → on inverse l'ordre.
+    */
+    text-align: center;
+    padding-top: calc(var(--hauteur-navbar) + 2rem);
+    /*
+      calc() permet de faire des calculs en CSS.
+      Ici : hauteur navbar + 2rem de marge supplémentaire.
+    */
+    gap: var(--espacement-md);
+  }
+
+  .hero__contenu {
+    max-width: 100%;
+  }
+
+  .hero__contenu .bouton {
+    margin-right: var(--espacement-xs);
+  }
+
+  /* Photo un peu plus petite */
+  .hero__photo,
+  .hero__initiales {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+
+/* ============================================================
+   MOBILES (< 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ---- NAVBAR MOBILE ---- */
+
+  /*
+    On cache les liens et on affiche le bouton burger.
+    display: none → l'élément est complètement caché (n'occupe pas d'espace).
+    visibility: hidden → caché mais occupe toujours l'espace.
+  */
+  .navbar__liens {
+    display: none;
+    /* Quand JS ajoute la classe .ouvert, on les montre */
+    position: fixed;
+    top: var(--hauteur-navbar);
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: var(--espacement-sm);
+    box-shadow: var(--ombre-md);
+    border-top: 1px solid var(--couleur-bordure);
+    z-index: 999;
+    gap: 0.5rem;
+  }
+
+  /* Classe ajoutée par JS au clic sur burger */
+  .navbar__liens.ouvert {
+    display: flex;
+    /*
+      L'animation doit être déclarée avec @keyframes.
+      On réutilise "apparaitre" de style.css.
+    */
+    animation: glisser 0.25s ease;
+  }
+
+  @keyframes glisser {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .navbar__liens a {
+    display: block;
+    padding: 0.75rem var(--espacement-sm);
+    border-radius: var(--arrondi-md);
+  }
+
+  /* Affiche le bouton burger */
+  .navbar__burger {
+    display: block;
+  }
+
+  /* ---- HERO MOBILE ---- */
+  .hero {
+    padding-left: var(--espacement-sm);
+    padding-right: var(--espacement-sm);
+  }
+
+  .hero__titre {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  .hero__photo,
+  .hero__initiales {
+    width: 160px;
+    height: 160px;
+    font-size: 2.5rem;
+  }
+
+  /* ---- SECTIONS GÉNÉRALES ---- */
+  .apropos,
+  .projets,
+  .competences,
+  .commentaires {
+    padding-left: var(--espacement-sm);
+    padding-right: var(--espacement-sm);
+    padding-top: var(--espacement-lg);
+    padding-bottom: var(--espacement-lg);
+  }
+
+  /* Les projets en 1 colonne sur mobile */
+  .projets__grille {
+    grid-template-columns: 1fr;
+  }
+
+  /* ---- COMPÉTENCES ---- */
+  /* Les barres : on réduit la grille */
+  .competence {
+    grid-template-columns: 100px 1fr 40px;
+  }
+
+  /* ---- FORMULAIRE ---- */
+  .formulaire__actions {
+    flex-direction: column;  /* Les boutons s'empilent */
+  }
+
+  .formulaire__actions .bouton {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ---- FOOTER ---- */
+  .footer__contenu {
+    flex-direction: column;
+    gap: var(--espacement-md);
+    align-items: center;
+  }
+
+  .footer__social ul,
+  .footer__nav ul {
+    align-items: center;
+  }
+}
+
+
+/* ============================================================
+   TRÈS PETITS MOBILES (< 480px)
+   ============================================================ */
+@media (max-width: 480px) {
+
+  :root {
+    --taille-h1: 2rem;   /* Réduit encore la taille des titres */
+    --taille-h2: 1.6rem;
+  }
+
+  .hero__titre {
+    font-size: 1.8rem;
+  }
+
+  .hero__photo,
+  .hero__initiales {
+    width: 130px;
+    height: 130px;
+    font-size: 2rem;
+  }
+
+  /* Carte commentaire : en colonne */
+  .carte-commentaire__entete {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  /* Les boutons de carte projet en colonne */
+  .carte-projet__liens {
+    flex-direction: column;
+  }
+
+  .carte-projet__liens .bouton {
+    text-align: center;
+  }
+}
+
+
+/* ============================================================
+   PRÉFÉRENCES UTILISATEUR : RÉDUCTION DES ANIMATIONS
+   ============================================================
+   Certains utilisateurs ont configuré leur OS pour réduire
+   les animations (épilepsie, sensibilités vestibulaires...).
+   prefers-reduced-motion permet de respecter ce choix.
+   C'est une bonne pratique d'accessibilité.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* ============================================================
+   MODE SOMBRE (Dark Mode)
+   ============================================================
+   Si l'utilisateur a activé le mode sombre dans son OS,
+   prefers-color-scheme: dark permet d'adapter le site.
+   [BONUS] → Décommente et personnalise ce bloc si tu veux
+   implémenter un mode sombre.
+*/
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --couleur-fond: #1a1a2e;
+    --couleur-texte: #e8e8e8;
+    --couleur-blanc: #2d2d44;
+    --couleur-bordure: #444466;
+  }
+
+  .formulaire,
+  .carte-projet,
+  .carte-commentaire {
+    background: #2d2d44;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    background: #1a1a2e;
+    color: #e8e8e8;
+  }
+}
+*/

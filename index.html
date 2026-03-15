@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  BIENVENUE DANS TON PROJET SITE VITRINE !
+  ============================================================
+
+  Ce fichier est le coeur de ton site. En HTML, on structure
+  le contenu : textes, images, liens, formulaires...
+
+  COMMENT LIRE CE FICHIER ?
+  → Chaque balise est expliquée avec un commentaire au-dessus.
+  → Les parties que TU dois modifier sont marquées avec [MODIFIE ICI].
+  → Ne touche pas à ce que tu ne comprends pas encore.
+
+  RAPPEL : En HTML on utilise des "balises" qui s'ouvrent
+  et se ferment :
+    <balise> contenu </balise>
+  Certaines balises sont "auto-fermantes" : <img />, <br />
+
+  ============================================================
+-->
+
+<!--
+  La balise <html> enveloppe toute la page.
+  lang="fr" indique au navigateur que la page est en français
+  (utile pour l'accessibilité et le référencement).
+-->
+<html lang="fr">
+
+<head>
+  <!--
+    ============================================================
+    LA SECTION <head> : LE COULISSES DE LA PAGE
+    ============================================================
+    Ce que tu mets ici n'est PAS affiché à l'écran.
+    C'est la configuration de ta page.
+  -->
+
+  <!--
+    <meta charset="UTF-8"> : déclare l'encodage des caractères.
+    Sans ça, les accents (é, à, ù...) s'affichent mal.
+    → Laisse toujours cette ligne en premier dans <head>.
+  -->
+  <meta charset="UTF-8" />
+
+  <!--
+    <meta name="viewport"> : indispensable pour les mobiles.
+    Sans ça, ton site s'afficherait tout petit sur téléphone.
+    width=device-width → la largeur s'adapte à l'écran
+    initial-scale=1.0  → pas de zoom au départ
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!--
+    <meta name="description"> : une courte description de ta page.
+    Ce texte apparaît dans les résultats de recherche Google.
+    [MODIFIE ICI] → Décris ton site en 1-2 phrases.
+  -->
+  <meta
+    name="description"
+    content="Mon site vitrine personnel — découvrez qui je suis, mes projets et laissez-moi un commentaire !"
+  />
+
+  <!--
+    <title> : le texte affiché dans l'onglet du navigateur.
+    [MODIFIE ICI] → Mets ton propre nom / titre.
+  -->
+  <title>Mon Site Vitrine — [Ton Prénom Nom]</title>
+
+  <!--
+    <link rel="stylesheet"> : permet d'importer un fichier CSS.
+    href="css/style.css" indique le chemin vers le fichier.
+    → Tu peux en avoir plusieurs (on en a deux ici).
+  -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+
+<!--
+  ============================================================
+  LA SECTION <body> : CE QUI EST VISIBLE À L'ÉCRAN
+  ============================================================
+  Tout ce que l'utilisateur voit se passe ici.
+-->
+<body>
+
+  <!-- ======================================================
+    BARRE DE NAVIGATION
+    La balise <nav> est sémantique : elle dit au navigateur
+    "ici c'est un menu de navigation". C'est important pour
+    l'accessibilité (lecteurs d'écran, robots de Google...).
+  ====================================================== -->
+  <nav class="navbar" id="navbar">
+
+    <!--
+      Le "logo" ou nom du site. La balise <a> crée un lien.
+      href="#accueil" → renvoie vers la section avec id="accueil"
+      sur la même page (ancre interne).
+      [MODIFIE ICI] → Remplace le texte par ton nom / logo.
+    -->
+    <a href="#accueil" class="navbar__logo">MonSite</a>
+
+    <!--
+      <ul> = liste non ordonnée (unordered list)
+      <li> = élément de liste (list item)
+      On utilise une liste pour les menus : c'est la convention.
+    -->
+    <ul class="navbar__liens">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#commentaires">Contact</a></li>
+    </ul>
+
+    <!--
+      Bouton "burger" pour mobile (☰).
+      Il est caché sur grand écran et visible sur mobile.
+      Le JavaScript dans main.js s'occupe de l'afficher/cacher.
+    -->
+    <button class="navbar__burger" id="burgerBtn" aria-label="Ouvrir le menu">
+      ☰
+    </button>
+  </nav>
+
+
+  <!-- ======================================================
+    SECTION HERO (ACCUEIL)
+    La première chose que l'utilisateur voit.
+    C'est ici qu'on fait une bonne première impression.
+
+    La balise <section> est sémantique comme <nav>.
+    id="accueil" permet aux liens #accueil de pointer ici.
+  ====================================================== -->
+  <section class="hero" id="accueil">
+
+    <!--
+      <div> = division, un conteneur "neutre" sans sens sémantique.
+      On l'utilise pour regrouper des éléments et les styler ensemble.
+    -->
+    <div class="hero__contenu">
+
+      <!--
+        <h1> = titre de niveau 1. Il ne doit y en avoir QU'UN par page.
+        C'est le titre principal, important pour le référencement.
+        [MODIFIE ICI]
+      -->
+      <h1 class="hero__titre">
+        Bonjour, je suis <span class="hero__nom">[Ton Prénom]</span> 👋
+      </h1>
+
+      <!--
+        <p> = paragraphe.
+        [MODIFIE ICI] → Décris-toi en une phrase.
+      -->
+      <p class="hero__soustitre">
+        Étudiant(e) passionné(e) par le développement web · Créateur de choses utiles
+      </p>
+
+      <!--
+        <a> avec une classe "bouton" → un lien qui ressemble à un bouton.
+        On NE crée PAS un vrai <button> ici car il redirige vers une autre page.
+        La règle : <button> pour les actions, <a> pour la navigation.
+      -->
+      <a href="#projets" class="bouton bouton--primaire">Voir mes projets</a>
+      <a href="#commentaires" class="bouton bouton--secondaire">Me laisser un message</a>
+
+    </div>
+
+    <!--
+      Photo de profil.
+      alt="..." = texte alternatif : affiché si l'image ne charge pas,
+      et lu par les lecteurs d'écran. Toujours le remplir !
+      [MODIFIE ICI] → Remplace "images/moi.jpg" par ta vraie photo.
+      Conseil : mets ta photo dans le dossier images/ et adapte le chemin.
+    -->
+    <div class="hero__photo-wrapper">
+      <img
+        src="images/placeholder.jpg"
+        alt="Photo de profil de [Ton Prénom]"
+        class="hero__photo"
+        onerror="this.style.display='none'"
+      />
+      <!-- Si tu n'as pas de photo, ce bloc affiche tes initiales -->
+      <div class="hero__initiales">[TN]</div>
+    </div>
+
+  </section>
+
+
+  <!-- ======================================================
+    SECTION À PROPOS
+    Présente qui tu es, ton parcours, ta passion.
+  ====================================================== -->
+  <section class="apropos" id="apropos">
+
+    <!--
+      <h2> = titre de niveau 2. On peut en avoir plusieurs.
+      La hiérarchie des titres est importante :
+      h1 → h2 → h3 → h4... (ne pas sauter de niveaux)
+    -->
+    <h2 class="section__titre">À propos de moi</h2>
+
+    <div class="apropos__contenu">
+
+      <div class="apropos__texte">
+        <!--
+          [MODIFIE ICI] → Parle de toi ! Qui es-tu ? Que fais-tu ?
+          Quels sont tes centres d'intérêt ?
+        -->
+        <p>
+          Je m'appelle <strong>[Ton Prénom Nom]</strong> et je suis actuellement
+          en formation <em>[Nom de ta formation]</em>. Passionné(e) par les nouvelles
+          technologies, j'apprends à créer des sites et applications web.
+        </p>
+        <p>
+          En dehors du code, j'aime <strong>[tes loisirs]</strong>. Je crois que
+          la créativité et la technique vont main dans la main.
+        </p>
+        <p>
+          Mon objectif : <em>[ce que tu veux faire plus tard]</em>.
+        </p>
+      </div>
+
+      <!--
+        Liste de faits rapides sur toi.
+        <strong> = gras sémantique (c'est important).
+        <em> = italique sémantique (c'est une emphase).
+      -->
+      <div class="apropos__infos">
+        <h3>En bref</h3>
+        <ul class="infos__liste">
+          <!--
+            [MODIFIE ICI] → Adapte chaque ligne à ta situation.
+          -->
+          <li>📍 <strong>Ville :</strong> [Ta ville]</li>
+          <li>🎓 <strong>Formation :</strong> [Ta formation]</li>
+          <li>💼 <strong>Disponible :</strong> [Oui / Non / En stage]</li>
+          <li>📧 <strong>Email :</strong> <a href="mailto:ton@email.com">ton@email.com</a></li>
+          <!--
+            href="mailto:..." : crée un lien qui ouvre le client mail
+            avec l'adresse pré-remplie. Pratique !
+          -->
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================
+    SECTION PROJETS
+    Mets en avant ton travail. Chaque "carte" est un projet.
+  ====================================================== -->
+  <section class="projets" id="projets">
+
+    <h2 class="section__titre">Mes Projets</h2>
+
+    <!--
+      <p class="section__intro"> : une phrase d'intro pour la section.
+      [MODIFIE ICI]
+    -->
+    <p class="section__intro">
+      Voici quelques projets sur lesquels j'ai travaillé. Chaque projet m'a appris quelque chose de nouveau.
+    </p>
+
+    <!--
+      Une grille de cartes. Chaque carte est un article <article>.
+      <article> est sémantique : un contenu autonome (comme une carte).
+    -->
+    <div class="projets__grille">
+
+      <!--
+        ---- CARTE PROJET 1 ----
+        [MODIFIE ICI] → Remplace par ton vrai projet.
+        Duplique ce bloc <article> pour ajouter d'autres projets.
+      -->
+      <article class="carte-projet">
+        <!--
+          Si tu as une capture d'écran du projet, mets-la ici.
+          Sinon laisse l'image placeholder ou supprime la balise <img>.
+        -->
+        <div class="carte-projet__image">
+          <img src="images/projet1.jpg" alt="Capture du projet 1" onerror="this.parentElement.style.background='var(--couleur-accent)'"/>
+          <span class="carte-projet__tag">HTML / CSS</span>
+        </div>
+        <div class="carte-projet__corps">
+          <h3 class="carte-projet__titre">Nom du Projet 1</h3>
+          <p class="carte-projet__description">
+            Une courte description de ce que fait ce projet, pourquoi tu l'as fait,
+            et ce que tu y as appris.
+          </p>
+          <div class="carte-projet__liens">
+            <!--
+              target="_blank" → ouvre le lien dans un nouvel onglet.
+              rel="noopener noreferrer" → sécurité obligatoire avec target="_blank".
+            -->
+            <a href="#" target="_blank" rel="noopener noreferrer" class="bouton bouton--petit">
+              Voir le projet
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="bouton bouton--petit bouton--secondaire">
+              Code source
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---- CARTE PROJET 2 ---- [MODIFIE ICI] -->
+      <article class="carte-projet">
+        <div class="carte-projet__image">
+          <img src="images/projet2.jpg" alt="Capture du projet 2" onerror="this.parentElement.style.background='var(--couleur-secondaire)'"/>
+          <span class="carte-projet__tag">JavaScript</span>
+        </div>
+        <div class="carte-projet__corps">
+          <h3 class="carte-projet__titre">Nom du Projet 2</h3>
+          <p class="carte-projet__description">
+            Description de ton deuxième projet. Qu'as-tu créé ? Quel problème ça résout ?
+          </p>
+          <div class="carte-projet__liens">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="bouton bouton--petit">Voir le projet</a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="bouton bouton--petit bouton--secondaire">Code source</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---- CARTE PROJET 3 ---- [MODIFIE ICI] -->
+      <article class="carte-projet">
+        <div class="carte-projet__image">
+          <img src="images/projet3.jpg" alt="Capture du projet 3" onerror="this.parentElement.style.background='var(--couleur-succès)'"/>
+          <span class="carte-projet__tag">En cours</span>
+        </div>
+        <div class="carte-projet__corps">
+          <h3 class="carte-projet__titre">Nom du Projet 3</h3>
+          <p class="carte-projet__description">
+            Un projet en cours... ou un projet que tu voudrais réaliser dans le futur.
+          </p>
+          <div class="carte-projet__liens">
+            <a href="#" class="bouton bouton--petit">Bientôt disponible</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================
+    SECTION COMPÉTENCES
+    Montre tes points forts avec des barres de progression.
+  ====================================================== -->
+  <section class="competences" id="competences">
+
+    <h2 class="section__titre">Mes Compétences</h2>
+
+    <div class="competences__grille">
+
+      <!--
+        COMPÉTENCES TECHNIQUES
+        Les barres de progression sont créées en CSS avec
+        des variables CSS (--niveau). Regarde dans style.css !
+      -->
+      <div class="competences__groupe">
+        <h3>Techniques</h3>
+
+        <!--
+          Chaque compétence a :
+          - un label (le nom)
+          - une barre de progression
+          - un pourcentage
+
+          Le style="--niveau: 80%" est une VARIABLE CSS INLINE.
+          Elle est lue par le CSS pour définir la largeur de la barre.
+          [MODIFIE ICI] → Change les niveaux (0% à 100%) et les noms.
+        -->
+        <div class="competence">
+          <span class="competence__label">HTML</span>
+          <div class="competence__barre">
+            <div class="competence__progression" style="--niveau: 80%"></div>
+          </div>
+          <span class="competence__pourcentage">80%</span>
+        </div>
+
+        <div class="competence">
+          <span class="competence__label">CSS</span>
+          <div class="competence__barre">
+            <div class="competence__progression" style="--niveau: 70%"></div>
+          </div>
+          <span class="competence__pourcentage">70%</span>
+        </div>
+
+        <div class="competence">
+          <span class="competence__label">JavaScript</span>
+          <div class="competence__barre">
+            <div class="competence__progression" style="--niveau: 50%"></div>
+          </div>
+          <span class="competence__pourcentage">50%</span>
+        </div>
+
+        <!-- [MODIFIE ICI] → Ajoute tes propres compétences ci-dessous -->
+        <div class="competence">
+          <span class="competence__label">[Autre compétence]</span>
+          <div class="competence__barre">
+            <div class="competence__progression" style="--niveau: 60%"></div>
+          </div>
+          <span class="competence__pourcentage">60%</span>
+        </div>
+
+      </div>
+
+      <!-- COMPÉTENCES DOUCES (SOFT SKILLS) -->
+      <div class="competences__groupe">
+        <h3>Savoir-être</h3>
+
+        <!--
+          Ici on utilise des "badges" au lieu des barres.
+          [MODIFIE ICI] → Adapte à tes vraies qualités.
+        -->
+        <div class="badges">
+          <span class="badge">Curieux(se)</span>
+          <span class="badge">Organisé(e)</span>
+          <span class="badge">Travail en équipe</span>
+          <span class="badge">Créatif(ve)</span>
+          <span class="badge">Autonome</span>
+          <span class="badge">Ponctuel(le)</span>
+          <!-- Ajoute autant de badges que tu veux -->
+        </div>
+
+        <!--
+          Langues parlées
+          [MODIFIE ICI]
+        -->
+        <h3 style="margin-top: 1.5rem;">Langues</h3>
+        <div class="badges">
+          <span class="badge badge--langue">🇫🇷 Français — Natif</span>
+          <span class="badge badge--langue">🇬🇧 Anglais — B2</span>
+          <!-- Ajoute tes langues -->
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================================================
+    SECTION COMMENTAIRES
+    Les visiteurs peuvent laisser un message.
+    Ces messages sont stockés dans le localStorage du navigateur
+    (ils restent même si on recharge la page !).
+    Tout la logique est dans le fichier js/main.js.
+  ====================================================== -->
+  <section class="commentaires" id="commentaires">
+
+    <h2 class="section__titre">Laissez un message</h2>
+    <p class="section__intro">
+      Vous avez aimé mon site ? Une remarque ? N'hésitez pas à me laisser un mot !
+    </p>
+
+    <!--
+      LE FORMULAIRE
+      <form> regroupe des champs de saisie.
+      id="formulaireCommentaire" → le JavaScript l'identifie par cet id.
+      novalidate → on gère la validation nous-mêmes en JavaScript.
+    -->
+    <form class="formulaire" id="formulaireCommentaire" novalidate>
+
+      <!--
+        <fieldset> regroupe des champs liés sémantiquement.
+        <legend> est son titre affiché.
+      -->
+      <fieldset>
+        <legend>Vos informations</legend>
+
+        <!--
+          Chaque champ est enveloppé dans un .formulaire__groupe
+          pour aligner le label et l'input côte à côte ou l'un sur l'autre.
+
+          RÈGLE IMPORTANTE : chaque <label> doit avoir un for="..."
+          qui correspond au id="..." de son <input>.
+          → Si tu cliques sur le label, ça focus l'input.
+          → Les lecteurs d'écran savent quel label correspond à quel champ.
+        -->
+        <div class="formulaire__groupe">
+          <label for="champNom">Votre nom <span class="obligatoire">*</span></label>
+          <input
+            type="text"
+            id="champNom"
+            name="nom"
+            placeholder="Ex : Marie Dupont"
+            required
+            maxlength="50"
+          />
+          <!--
+            required     → champ obligatoire
+            maxlength    → longueur maximale autorisée
+            placeholder  → texte grisé quand le champ est vide
+          -->
+          <!-- Zone pour afficher les erreurs (remplie par JS) -->
+          <span class="formulaire__erreur" id="erreurNom"></span>
+        </div>
+
+        <div class="formulaire__groupe">
+          <label for="champEmail">Votre email <span class="optionnel">(facultatif)</span></label>
+          <input
+            type="email"
+            id="champEmail"
+            name="email"
+            placeholder="Ex : marie@email.com"
+          />
+          <!--
+            type="email" → le navigateur vérifie que c'est un format email valide.
+            Les différents types d'input : text, email, number, date, password,
+            checkbox, radio, file, color, range...
+          -->
+          <span class="formulaire__erreur" id="erreurEmail"></span>
+        </div>
+
+      </fieldset>
+
+      <fieldset>
+        <legend>Votre message</legend>
+
+        <div class="formulaire__groupe">
+          <label for="champNote">Note globale <span class="obligatoire">*</span></label>
+          <!--
+            type="range" → curseur de 1 à 5.
+            On affiche la valeur choisie en temps réel avec JavaScript.
+          -->
+          <div class="note__wrapper">
+            <input
+              type="range"
+              id="champNote"
+              name="note"
+              min="1"
+              max="5"
+              value="3"
+            />
+            <output id="affichageNote">⭐⭐⭐</output>
+          </div>
+        </div>
+
+        <div class="formulaire__groupe">
+          <label for="champMessage">Votre commentaire <span class="obligatoire">*</span></label>
+          <!--
+            <textarea> = zone de texte multi-lignes.
+            rows="5" → hauteur initiale en nombre de lignes.
+          -->
+          <textarea
+            id="champMessage"
+            name="message"
+            rows="5"
+            placeholder="Écrivez votre message ici... (10 à 500 caractères)"
+            required
+            minlength="10"
+            maxlength="500"
+          ></textarea>
+          <!--
+            Compteur de caractères (mis à jour par JS)
+          -->
+          <small class="compteur-chars">
+            <span id="nbChars">0</span> / 500 caractères
+          </small>
+          <span class="formulaire__erreur" id="erreurMessage"></span>
+        </div>
+
+      </fieldset>
+
+      <!--
+        <button type="submit"> → déclenche la soumission du formulaire.
+        type="reset" → réinitialise tous les champs.
+      -->
+      <div class="formulaire__actions">
+        <button type="submit" class="bouton bouton--primaire">
+          Envoyer mon message ✉️
+        </button>
+        <button type="reset" class="bouton bouton--secondaire">
+          Effacer
+        </button>
+      </div>
+
+      <!--
+        Zone de confirmation (cachée par défaut, affichée par JS après envoi).
+        aria-live="polite" → les lecteurs d'écran annoncent le changement.
+      -->
+      <div class="formulaire__confirmation" id="confirmationMessage" aria-live="polite">
+        ✅ Merci pour votre message ! Il est bien enregistré.
+      </div>
+
+    </form>
+
+
+    <!-- ======================================================
+      LISTE DES COMMENTAIRES DÉJÀ POSTÉS
+      Cette zone est remplie dynamiquement par JavaScript.
+      Au chargement de la page, JS lit le localStorage et
+      affiche tous les commentaires enregistrés ici.
+    ====================================================== -->
+    <div class="commentaires__liste" id="listeCommentaires">
+
+      <h3>Messages des visiteurs</h3>
+
+      <!--
+        <p id="aucunCommentaire"> → affiché si aucun commentaire n'existe.
+        JS le cache quand il y a des commentaires.
+      -->
+      <p class="commentaires__vide" id="aucunCommentaire">
+        Aucun commentaire pour l'instant. Soyez le premier ! 🙌
+      </p>
+
+      <!--
+        <div id="commentairesContainer"> → JS insère les cartes de commentaires ici.
+        Ne touche pas à cet id, le JavaScript en a besoin !
+      -->
+      <div id="commentairesContainer"></div>
+
+      <!--
+        Bouton pour effacer tous les commentaires.
+        (Utile pour les tests / la démonstration)
+      -->
+      <button
+        class="bouton bouton--danger bouton--petit"
+        id="btnEffacerTout"
+        style="display: none;"
+      >
+        🗑️ Effacer tous les commentaires
+      </button>
+
+    </div>
+  </section>
+
+
+  <!-- ======================================================
+    PIED DE PAGE (FOOTER)
+    Infos légales, liens réseaux sociaux, copyright.
+  ====================================================== -->
+  <footer class="footer">
+
+    <div class="footer__contenu">
+
+      <!--
+        [MODIFIE ICI] → Mets tes vrais liens réseaux sociaux.
+        Si tu n'as pas de compte, supprime le <li> correspondant.
+      -->
+      <div class="footer__social">
+        <h4>Me retrouver en ligne</h4>
+        <ul>
+          <li>
+            <a href="https://github.com/tonpseudo" target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://linkedin.com/in/tonprofil" target="_blank" rel="noopener noreferrer">
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer__nav">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#accueil">Accueil</a></li>
+          <li><a href="#apropos">À propos</a></li>
+          <li><a href="#projets">Projets</a></li>
+          <li><a href="#competences">Compétences</a></li>
+          <li><a href="#commentaires">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!--
+      Le copyright. [MODIFIE ICI]
+      &copy; = symbole © en HTML (entité HTML).
+      Autres entités utiles : &amp; (&), &lt; (<), &gt; (>), &nbsp; (espace insécable)
+    -->
+    <p class="footer__copyright">
+      &copy; 2024 [Ton Prénom Nom] — Fait avec ❤️ et beaucoup de café ☕
+    </p>
+
+    <!-- Bouton retour en haut de page -->
+    <a href="#accueil" class="footer__retour-haut" aria-label="Retour en haut">↑ Haut</a>
+
+  </footer>
+
+
+  <!--
+    ============================================================
+    IMPORT DU JAVASCRIPT
+    IMPORTANT : Le script est placé à la FIN du <body>.
+    Pourquoi ? Parce que le JavaScript doit attendre que tout
+    le HTML soit chargé avant de s'exécuter.
+    Si on le mettait dans <head>, le HTML n'existerait pas encore
+    et JS ne trouverait pas les éléments.
+    ============================================================
+  -->
+  <script src="js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+DOSSIER IMAGES
+==============
+
+Mets ici toutes tes images.
+
+IMAGES À AJOUTER :
+------------------
+• moi.jpg        → ta photo de profil (idéalement carrée, min 300×300px)
+• projet1.jpg    → capture d'écran du projet 1
+• projet2.jpg    → capture d'écran du projet 2
+• projet3.jpg    → capture d'écran du projet 3
+
+CONSEILS :
+----------
+• Utilise des formats modernes : .webp (meilleur) ou .jpg/.png (compatibles)
+• Optimise tes images avant de les ajouter (outil en ligne : squoosh.app)
+• Noms de fichiers sans espaces ni accents : "mon-projet.jpg" ✅, "mon projet.jpg" ❌
+• Pour les photos carrées, recadre avant d'importer (outil : remove.bg, canva.com)
