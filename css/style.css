@@ -264,6 +264,18 @@ h3 { font-size: var(--taille-h3); }
   font-size: 0.875rem;
 }
 
+/* Bouton désactivé (disabled) */
+.bouton:disabled,
+.bouton[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;    /* La souris montre un cercle barré */
+  transform: none;        /* Pas d'effet de lévitation */
+  box-shadow: none;
+  background-color: var(--couleur-texte-clair);
+  border-color: var(--couleur-texte-clair);
+  color: var(--couleur-blanc);
+}
+
 /* --- Titres de section --- */
 .section__titre {
   text-align: center;
@@ -702,6 +714,42 @@ h3 { font-size: var(--taille-h3); }
 @keyframes remplir {
   from { width: 0; }
   to   { width: var(--niveau); }
+}
+
+/*
+  ---- Animation d'entrée au scroll (utilisée par l'IntersectionObserver dans main.js) ----
+  main.js observe les .carte-projet et .competences__groupe.
+  Quand un élément entre dans la fenêtre, JS lui ajoute la classe .animate-in.
+  Ce CSS définit ce qui se passe quand cette classe est ajoutée.
+
+  ÉTAT INITIAL (avant l'animation) : invisible et légèrement décalé vers le bas.
+  Ces styles sont appliqués via l'attribut style="" dans le JS,
+  ou on peut les mettre directement ici sur les éléments cibles.
+*/
+.carte-projet,
+.competences__groupe {
+  /*
+    opacity: 0 → invisible par défaut (avant animation).
+    transform: translateY(30px) → 30px vers le bas par défaut.
+    Les deux sont remis à leur état normal par l'animation ci-dessous.
+  */
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/*
+  Quand JS ajoute la classe .animate-in → l'élément apparaît en douceur.
+*/
+.carte-projet.animate-in,
+.competences__groupe.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Les cartes de commentaires apparaissent aussi au chargement */
+.carte-commentaire {
+  animation: apparaitre 0.4s ease;
 }
 
 .competence__pourcentage {

@@ -467,11 +467,21 @@ champMessage.addEventListener('input', function() {
   nbChars.textContent = longueur;
 
   /* Change la couleur du compteur si on approche de la limite */
+  /*
+    PIÈGE CLASSIQUE : en JavaScript, les variables CSS (var(--ma-variable))
+    ne fonctionnent PAS dans element.style.color = 'var(...)'.
+    Solution : lire la variable avec getComputedStyle().
+    getComputedStyle(document.documentElement) → lit le :root du CSS
+    .getPropertyValue('--couleur-danger') → récupère la valeur
+  */
+  const rouge  = getComputedStyle(document.documentElement).getPropertyValue('--couleur-danger').trim();
+  const jaune  = getComputedStyle(document.documentElement).getPropertyValue('--couleur-avertissement').trim();
+
   if (longueur > 450) {
-    nbChars.style.color = 'var(--couleur-danger)';
+    nbChars.style.color = rouge;
     nbChars.style.fontWeight = 'bold';
   } else if (longueur > 400) {
-    nbChars.style.color = 'var(--couleur-avertissement)';
+    nbChars.style.color = jaune;
     nbChars.style.fontWeight = 'normal';
   } else {
     nbChars.style.color = '';  /* Remet la couleur par défaut */

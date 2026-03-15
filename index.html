@@ -281,7 +281,13 @@
           Sinon laisse l'image placeholder ou supprime la balise <img>.
         -->
         <div class="carte-projet__image">
-          <img src="images/projet1.jpg" alt="Capture du projet 1" onerror="this.parentElement.style.background='var(--couleur-accent)'"/>
+          <img src="images/projet1.jpg" alt="Capture du projet 1" onerror="this.parentElement.style.background='#43b89c'"/>
+          <!--
+            POURQUOI #43b89c et pas var(--couleur-accent) ?
+            Les variables CSS (var()) fonctionnent dans les fichiers .css,
+            mais PAS dans les attributs HTML (onerror, onclick, style="...").
+            En JavaScript inline, il faut écrire la valeur directement.
+          -->
           <span class="carte-projet__tag">HTML / CSS</span>
         </div>
         <div class="carte-projet__corps">
@@ -308,7 +314,7 @@
       <!-- ---- CARTE PROJET 2 ---- [MODIFIE ICI] -->
       <article class="carte-projet">
         <div class="carte-projet__image">
-          <img src="images/projet2.jpg" alt="Capture du projet 2" onerror="this.parentElement.style.background='var(--couleur-secondaire)'"/>
+          <img src="images/projet2.jpg" alt="Capture du projet 2" onerror="this.parentElement.style.background='#ff6584'"/>
           <span class="carte-projet__tag">JavaScript</span>
         </div>
         <div class="carte-projet__corps">
@@ -326,7 +332,7 @@
       <!-- ---- CARTE PROJET 3 ---- [MODIFIE ICI] -->
       <article class="carte-projet">
         <div class="carte-projet__image">
-          <img src="images/projet3.jpg" alt="Capture du projet 3" onerror="this.parentElement.style.background='var(--couleur-succès)'"/>
+          <img src="images/projet3.jpg" alt="Capture du projet 3" onerror="this.parentElement.style.background='#28a745'"/>
           <span class="carte-projet__tag">En cours</span>
         </div>
         <div class="carte-projet__corps">
@@ -335,7 +341,15 @@
             Un projet en cours... ou un projet que tu voudrais réaliser dans le futur.
           </p>
           <div class="carte-projet__liens">
-            <a href="#" class="bouton bouton--petit">Bientôt disponible</a>
+            <!--
+              On utilise <button type="button"> au lieu de <a href="#">
+              car ce bouton ne navigue vers nulle part.
+              Règle : <a> pour les liens, <button> pour les actions.
+              L'attribut disabled l'empêche d'être cliqué.
+            -->
+            <button type="button" class="bouton bouton--petit" disabled>
+              Bientôt disponible
+            </button>
           </div>
         </div>
       </article>
